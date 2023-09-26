@@ -16,10 +16,10 @@ jobs:
            curl -L -o /tmp/terraform-provider-tfe_0.45.0_linux_amd64.zip  https://releases.hashicorp.com/terraform-provider-tfe/0.45.0/terraform-provider-tfe_0.45.0_linux_amd64.zip
            unzip /tmp/terraform-provider-tfe_0.45.0_linux_amd64.zip
            sudo chown root:root terraform-provider-tfe_v0.45.0_x5
-           sudo chmod +x terraform-provider-tfe_v0.45.0_x5
-           sudo mv terraform-provider-tfe_v0.45.0_x5 /usr/local/bin/
-           ls -lrth /usr/local/bin/
-           tfe --version
+           #sudo chmod +x terraform-provider-tfe_v0.45.0_x5
+           #sudo mv terraform-provider-tfe_v0.45.0_x5 /usr/local/bin/
+           ls -lrth
+           #tfe --version
       - name: Create Terraform Cloud Workspace
         id: workspace
         env:
