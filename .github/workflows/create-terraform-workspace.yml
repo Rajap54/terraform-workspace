@@ -3,7 +3,7 @@ name: Create Terraform Cloud Workspace
 on:
   push:
     paths:
-      - 'infrastructure/**'
+      - 'terraform-workspace/**'
 
 jobs:
   create-workspace:
