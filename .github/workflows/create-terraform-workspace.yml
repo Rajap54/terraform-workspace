@@ -3,7 +3,7 @@ name: Create Terraform Cloud Workspace
 on:
   push:
     branches:
-      - main
+      - main  # Modify this branch as needed
 
 jobs:
   create_workspace:
@@ -12,19 +12,37 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Get repository name
+      - name: Install Terraform and Terraform Cloud CLI
         run: |
-          REPO_NAME=$(basename "$GITHUB_REPOSITORY")
+          # Install Terraform
+          curl -L -o terraform.zip https://releases.hashicorp.com/terraform/0.15.5/terraform_0.15.5_linux_amd64.zip
+          unzip terraform.zip
+          chmod +x terraform
+          mv terraform /usr/local/bin/
+          
+          # Install Terraform Cloud CLI (tfe)
+          curl -L -o tfe.zip https://releases.hashicorp.com/tfe/0.10.2/tfe_0.10.2_linux_amd64.zip
+          unzip tfe.zip
+          chmod +x tfe
+          mv tfe /usr/local/bin/
+          
+          # Display versions
+          terraform --version
+          tfe --version
 
-      - name: Create Terraform Cloud workspace
-        run: |
-          terraform cloud workspace create -name "${REPO_NAME}-workspace"
-        env:
-          TERRAFORM_CLOUD_ORGANIZATION: support-US
-          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TF_CLOUD_TOKEN }}
+      # - name: Get repository name
+      #   run: |
+      #     REPO_NAME=$(basename "$GITHUB_REPOSITORY")
 
-      - name: Handle errors
-        if: ${{ failure() }}
-        run: |
-          echo "Failed to create Terraform Cloud workspace: ${error.message}"
-          exit 1
+      # - name: Create Terraform Cloud workspace
+      #   run: |
+      #     terraform cloud workspace create -name "${REPO_NAME}-workspace"
+      #   env:
+      #     TERRAFORM_CLOUD_ORGANIZATION: ${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}
+      #     TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+
+      # - name: Handle errors
+      #   if: ${{ failure() }}
+      #   run: |
+      #     echo "Failed to create Terraform Cloud workspace: ${error.message}"
+      #     exit 1
