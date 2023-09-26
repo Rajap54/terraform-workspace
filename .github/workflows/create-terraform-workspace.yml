@@ -3,26 +3,28 @@ name: Create Terraform Cloud Workspace
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
-  create-workspace:
+  create_workspace:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
-      - name: Create Terraform Cloud Workspace
-        env:
-          ORGANIZATION: support-US
-          REPO_NAME: ${{ github.repository }}
-          WORKSPACE_NAME: ${{ github.event.repository.name }}-workspace
-          TFC_API_TOKEN: ${{ secrets.TF_CLOUD_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get repository name
         run: |
-          # Check if the workspace already exists
-          if terraform workspace list -no-color | grep -q $WORKSPACE_NAME; then
-            echo "Workspace already exists. Skipping workspace creation."
-          else
-            # Create the Terraform Cloud workspace
-            terraform workspace new $WORKSPACE_NAME
-          fi
+          REPO_NAME=$(basename "$GITHUB_REPOSITORY")
+
+      - name: Create Terraform Cloud workspace
+        run: |
+          terraform cloud workspace create -name "${REPO_NAME}-workspace"
+        env:
+          TERRAFORM_CLOUD_ORGANIZATION: support-US
+          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TF_CLOUD_TOKEN }}
+
+      - name: Handle errors
+        if: ${{ failure() }}
+        run: |
+          echo "Failed to create Terraform Cloud workspace: ${error.message}"
+          exit 1
