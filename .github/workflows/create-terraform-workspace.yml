@@ -2,8 +2,8 @@ name: Create Terraform Cloud Workspace
 
 on:
   push:
-    paths:
-      - 'infrastructure/**'
+    branches:
+      - main
 
 jobs:
   create-workspace:
