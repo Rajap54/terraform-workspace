@@ -18,7 +18,7 @@ jobs:
            sudo chown root:root terraform-provider-tfe_v0.45.0_x5
            sudo chmod +x terraform-provider-tfe_v0.45.0_x5
            sudo mv terraform-provider-tfe_v0.45.0_x5 /usr/local/bin/
-           ls -lrth
+           ls -lrth /usr/local/bin/
            #tfe --version
       - name: Create Terraform Cloud Workspace
         id: workspace
