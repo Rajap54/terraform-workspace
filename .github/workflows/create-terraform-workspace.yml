@@ -2,8 +2,7 @@ name: Create Terraform Cloud Workspace
 
 on:
   push:
-    paths:
-      - 'terraform-workspace/**'
+      branches: [ "main" ]
 
 jobs:
   create-workspace:
