@@ -13,11 +13,13 @@ jobs:
 
       - name: Install Terraform Cloud CLI (tfe)
         run: |
-          sudo curl -L -o tfe.zip https://releases.hashicorp.com/terraform-provider-tfe/0.45.0/terraform-provider-tfe_0.45.0_linux_amd64.zip
-          sudo unzip tfe.zip
-          sudo chmod +x tfe
-          sudo mv tfe /usr/local/bin/
-          sudo tfe --version
+           curl -L https://releases.hashicorp.com/terraform-provider-tfe/0.45.0/terraform-provider-tfe_0.45.0_linux_amd64.zip
+           ls -lrth
+           mv terraform-provider-tfe_0.45.0_linux_amd64.zip tfe
+           unzip tfe
+           chmod +x tfe
+           mv tfe /usr/local/bin/
+           tfe --version
 
       - name: Create Terraform Cloud Workspace
         id: workspace
