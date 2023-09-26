@@ -32,7 +32,7 @@ jobs:
            sudo chmod a+rx terraform-provider-tfe_v0.45.0_x5
            sudo ln -s terraform-provider-tfe_v0.45.0_x5 /usr/local/bin
            ls -lrth /usr/local/bin
-           tfe help
+           tfe
 
       # - name: List Terraform Cloud Workspaces
       #   run: |
