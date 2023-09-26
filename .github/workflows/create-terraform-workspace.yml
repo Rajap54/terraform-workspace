@@ -16,7 +16,7 @@ jobs:
            curl -L -o /tmp/terraform-provider-tfe_0.45.0_linux_amd64.zip  https://releases.hashicorp.com/terraform-provider-tfe/0.45.0/terraform-provider-tfe_0.45.0_linux_amd64.zip
            ls -lrth
            mv /tmp/terraform-provider-tfe_0.45.0_linux_amd64.zip tfe.zip
-           unzip tfe
+           unzip tfe.zip
            chmod +x tfe
            mv tfe /usr/local/bin/
            tfe --version
