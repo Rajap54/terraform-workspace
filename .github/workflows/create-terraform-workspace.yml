@@ -26,13 +26,13 @@ jobs:
            sudo mv terraform /usr/local/bin/
            terraform -v
            #install cloud CLI
-           # curl -L -o tf.zip https://releases.hashicorp.com/terraform-provider-tfe/0.45.0/terraform-provider-tfe_0.45.0_linux_amd64.zip
-           # chmod +x tf.zip
-           # unzip tf.zip
-           # sudo chmod a+rx terraform-provider-tfe_v0.45.0_x5
-           # sudo ln -s terraform-provider-tfe_v0.45.0_x5 /usr/local/bin
-           # ls -lrth /usr/local/bin
-           # tfe help
+           curl -L -o tf.zip https://releases.hashicorp.com/terraform-provider-tfe/0.45.0/terraform-provider-tfe_0.45.0_linux_amd64.zip
+           chmod +x tf.zip
+           unzip tf.zip
+           sudo chmod a+rx terraform-provider-tfe_v0.45.0_x5
+           sudo ln -s terraform-provider-tfe_v0.45.0_x5 /usr/local/bin
+           ls -lrth /usr/local/bin
+           tfe help
 
       # - name: List Terraform Cloud Workspaces
       #   run: |
