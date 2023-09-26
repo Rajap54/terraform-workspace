@@ -20,6 +20,9 @@ jobs:
       - name: Install Terraform and Terraform Cloud CLI
         uses: hasicorp/setup-terraform@2
 
+        with:
+           terraform_version: latest
+
       - name: List Terraform Cloud Workspaces
         run: |
           # Check if the workspace already exists
