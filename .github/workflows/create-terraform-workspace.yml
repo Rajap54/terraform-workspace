@@ -13,10 +13,9 @@ jobs:
 
       - name: Install Terraform Cloud CLI (tfe)
         run: |
-           rm -rf *
-           curl  https://releases.hashicorp.com/terraform-provider-tfe/0.45.0/terraform-provider-tfe_0.45.0_linux_amd64.zip
+           curl-L -o /tmp/terraform-provider-tfe_0.45.0_linux_amd64.zip  https://releases.hashicorp.com/terraform-provider-tfe/0.45.0/terraform-provider-tfe_0.45.0_linux_amd64.zip
            ls -lrth
-           mv terraform-provider-tfe_0.45.0_linux_amd64.zip tfe
+           mv /tmp/terraform-provider-tfe_0.45.0_linux_amd64.zip tfe
            unzip tfe
            chmod +x tfe
            mv tfe /usr/local/bin/
