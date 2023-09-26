@@ -1,0 +1,49 @@
+name: Create Terraform Cloud Workspace
+
+on:
+  push:
+    paths:
+      - 'infrastructure/**'
+
+jobs:
+  create-workspace:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Terraform Cloud CLI (tfe)
+        run: |
+          curl -L -o tfe.zip https://releases.hashicorp.com/tfe/0.10.2/tfe_0.10.2_linux_amd64.zip
+          unzip tfe.zip
+          chmod +x tfe
+          mv tfe /usr/local/bin/
+          tfe --version
+
+      - name: Create Terraform Cloud Workspace
+        id: workspace
+        env:
+          TF_TOKEN: ${{ secrets.TF_CLOUD_TOKEN }}
+          ORGANIZATION: Rajap54
+          REPO_NAME: ${{ github.repository }}
+          WORKSPACE_NAME: ${{ github.event.repository.name }}-workspace
+        run: |
+          # Check if the workspace already exists
+          #WORKSPACE_NAME="${{ github.repository.name }}-workspace"
+          if tfe workspace list | grep -q "$WORKSPACE_NAME"; then
+            echo "Workspace '$WORKSPACE_NAME' already exists. Skipping workspace creation."
+          else
+            if ! tfe workspace create \
+              --name "$WORKSPACE_NAME" \
+              --organization "" \
+              --vcs-repo "${{ github.repository }}"; then
+              echo "Error: Failed to create Terraform Cloud workspace."
+              exit 1
+            else
+              echo "Terraform Cloud workspace '$WORKSPACE_NAME' created successfully."
+            fi
+          fi
+
+      - name: Output Workspace Status
+        run: |
+          echo "Workspace Status: ${{ steps.workspace.outputs.exit-status }}"
