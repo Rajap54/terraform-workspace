@@ -24,5 +24,5 @@ jobs:
             echo "Workspace already exists. Skipping workspace creation."
           else
             # Create the Terraform Cloud workspace
-            terraform workspace new $WORKSPACE_NAME -name=$WORKSPACE_NAME -organization=$ORGANIZATION -token=$TFC_API_TOKEN
+            terraform workspace new $WORKSPACE_NAME
           fi
