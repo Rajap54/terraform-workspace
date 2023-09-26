@@ -8,34 +8,27 @@ on:
 jobs:
   list-workspaces:
     runs-on: ubuntu-latest
+    env:
+       TF_CLOUD_TOKEN: ${{ secrets.TF_CLOUD_TOKEN }}
+       ORGANIZATION: support-US
+       REPO_NAME: ${{ github.repository }}
+       WORKSPACE_NAME: ${{ github.event.repository.name }}-workspace
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Install Terraform and Terraform Cloud CLI
-        run: |
-          # Install Terraform
-          curl -L -o terraform.zip https://releases.hashicorp.com/terraform/0.15.5/terraform_0.15.5_linux_amd64.zip
-          unzip terraform.zip
-          chmod +x terraform
-          mv terraform /usr/local/bin/
-          
-          # Install Terraform Cloud CLI (tfe)
-          curl -L -o tfe.zip https://releases.hashicorp.com/tfe/0.10.2/tfe_0.10.2_linux_amd64.zip
-          unzip tfe.zip
-          chmod +x tfe
-          mv tfe /usr/local/bin/
-          
-          # Display versions
-          terraform --version
-          tfe --version
+        uses: hasicorp/setup-terraform@2
+
+        with:
+           terraform_version: latest
 
       - name: List Terraform Cloud Workspaces
-        env:
-          TF_TOKEN: ${{ secrets.TF_CLOUD_TOKEN }}  # Add your Terraform Cloud API token as a secret
         run: |
-          # Authenticate to Terraform Cloud
-          tfe login $TF_TOKEN
-
-          # List Terraform Cloud workspaces
-          terraform workspace list
+          # Check if the workspace already exists
+          if terraform workspace list -no-color | grep -q $WORKSPACE_NAME; then
+            echo "Workspace already exists. Skipping workspace creation."
+          else
+            # Create the Terraform Cloud workspace
+            terraform workspace new $WORKSPACE_NAME -name=$WORKSPACE_NAME -organization=$ORGANIZATION -token=$TFC_API_TOKEN
+          fi
