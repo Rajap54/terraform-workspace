@@ -46,8 +46,8 @@ jobs:
           TF_API_TOKEN: "${{ secrets.TF_CLOUD_TOKEN }}"
           TF_WORKSPACE: "tnd-dev-common-aks-workspace"
         run: terraform plan -var "tfe_api_token=${{ secrets.TF_CLOUD_TOKEN }}" -var "tfe_organization=support-US"
-      -name: apply Terraform configuration
-       env:
+      - name: apply Terraform configuration
+        env:
           TF_CLOUD_ORGANIZATION: "BurnsMcDonnell"
           TF_API_TOKEN: "${{ secrets.TF_CLOUD_TOKEN }}"
           TF_WORKSPACE: "tnd-dev-common-aks-workspace"
