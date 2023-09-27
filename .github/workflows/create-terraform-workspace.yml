@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: infra
+        working-directory: ${{ env.CONFIG_DIRECTORY }}
 
     steps:
       - name: Checkout Code
