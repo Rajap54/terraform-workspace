@@ -3,7 +3,7 @@ name: Test terraform configuration
 on:
   push:
     branches:
-      - feature/infra-tf-workspace
+      - main
 
 env:
  CONFIG_DIRECTORY: "./"
