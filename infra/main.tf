@@ -28,11 +28,11 @@ resource "tfe_workspace" "tnd-dev-common-aks-workspace" {
   auto_apply    = true
 }
 
-data "tfe_workspace" "existing_workspace" {
+/*data "tfe_workspace" "existing_workspace" {
   name         = "tnd-dev-common-aks-workspace"
   organization = var.tfe_organization
-}
+}*/
 
-output "workspace_id" {
+/*output "workspace_id" {
   value = data.tfe_workspace.existing_workspace.id
-}
+}*/
