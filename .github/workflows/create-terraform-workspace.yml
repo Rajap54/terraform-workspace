@@ -21,10 +21,10 @@ jobs:
         with:
           directory: ${{ env.CONFIG_DIRECTORY }}
 
-      - name: Set Terraform Input Variables
-        run: | 
-         echo "tfe_api_token="${{ secrets.TF_CLOUD_TOKEN }}"" > terraform.auto.tfvars
-         echo "tfe_organization=${{ env.TF_CLOUD_ORGANIZATION}}" >> terraform.auto.tfvars
+      # - name: Set Terraform Input Variables
+      #   run: | 
+      #   # echo "tfe_api_token="${{ secrets.TF_CLOUD_TOKEN }}"" > terraform.auto.tfvars
+      #   #echo "tfe_organization=${{ env.TF_CLOUD_ORGANIZATION}}" >> terraform.auto.tfvars
 
      ## - name: Install Terraform CLI
        ## uses: hashicorp/setup-terraform@v2
@@ -45,4 +45,4 @@ jobs:
           TF_CLOUD_ORGANIZATION: "BurnsMcDonnell"
           TF_API_TOKEN: "${{ secrets.TF_CLOUD_TOKEN }}"
           TF_WORKSPACE: "tnd-dev-common-aks-workspace"
-        run: terraform plan
+        run: terraform plan -var "tfe_api_token=${{ secrets.TF_CLOUD_TOKEN }}" -var "tfe_organization="BurnsMcDonnell"
